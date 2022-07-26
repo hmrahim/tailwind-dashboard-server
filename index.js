@@ -2,7 +2,7 @@ const express = require("express")
 const cors = require("cors")
 require("dotenv").config()
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
 const app =  express()
 const port = process.env.PORT || 5000
 
@@ -21,6 +21,40 @@ const run = async ()=> {
        if(db){
         console.log("database connected");
        }
+        // collections=============
+        const studentCollection = client.db("dashboard").collection("students")
+
+
+
+        // all routes================================
+        
+        // Students route==============================
+
+        app.get("/student",async(req,res)=> {
+            const data = await studentCollection.find().toArray()
+            res.send(data)
+        })
+        app.post("/student",async(req,res)=> {
+            const body = req.body
+            const result = await studentCollection.insertOne(body)
+            res.send(result)
+            
+            
+        })
+
+        app.get("/student/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await studentCollection.findOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+        app.delete("/student/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await studentCollection.deleteOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+
+
+       
  
     } finally{
 
