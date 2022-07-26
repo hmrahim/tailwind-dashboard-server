@@ -23,6 +23,7 @@ const run = async ()=> {
        }
         // collections=============
         const studentCollection = client.db("dashboard").collection("students")
+        const teacherCollection = client.db("dashboard").collection("teachers")
 
 
 
@@ -53,6 +54,30 @@ const run = async ()=> {
             res.send(data)
         })
 
+        // Teachers================
+
+        app.get("/teacher",async(req,res)=> {
+            const data = await teacherCollection.find().toArray()
+            res.send(data)
+        })
+        app.post("/teacher",async(req,res)=> {
+            const body = req.body
+            const result = await teacherCollection.insertOne(body)
+            res.send(result)
+            
+            
+        })
+
+        app.get("/teacher/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await teacherCollection.findOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+        app.delete("/teacher/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await teacherCollection.deleteOne({_id:ObjectId(id)})
+            res.send(data)
+        })
 
        
  
