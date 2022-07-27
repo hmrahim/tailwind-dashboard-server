@@ -24,6 +24,9 @@ const run = async ()=> {
         // collections=============
         const studentCollection = client.db("dashboard").collection("students")
         const teacherCollection = client.db("dashboard").collection("teachers")
+        const classCollection = client.db("dashboard").collection("class")
+        const subjectCollection = client.db("dashboard").collection("subjects")
+        const shiftCollection = client.db("dashboard").collection("shifts")
 
 
 
@@ -78,6 +81,134 @@ const run = async ()=> {
             const data = await teacherCollection.deleteOne({_id:ObjectId(id)})
             res.send(data)
         })
+
+        // class api=================
+
+        app.get("/class",async(req,res)=> {
+            const data = await classCollection.find().toArray()
+            res.send(data)
+        })
+        app.post("/class",async(req,res)=> {
+            const body = req.body
+            const result = await classCollection.insertOne(body)
+            res.send(result)
+            
+            
+        })
+        app.patch("/class/:id",async(req,res)=> {
+            const body = req.body
+            const id = req.params.id
+            const query = {_id:ObjectId(id)}
+            const docs = {
+                $set:{
+                    name:body.name
+                }
+            }
+            const result = await classCollection.updateOne(query,docs)
+            res.send(result)
+            console.log(result);
+          
+            
+            
+        })
+
+        app.get("/class/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await classCollection.findOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+        app.delete("/class/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await classCollection.deleteOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+
+        
+        // subject api=================
+
+        app.get("/subject",async(req,res)=> {
+            const data = await subjectCollection.find().toArray()
+            res.send(data)
+        })
+        app.post("/subject",async(req,res)=> {
+            const body = req.body
+            const result = await subjectCollection.insertOne(body)
+            res.send(result)
+            
+            
+        })
+        app.patch("/subject/:id",async(req,res)=> {
+            const body = req.body
+            const id = req.params.id
+            const query = {_id:ObjectId(id)}
+            const docs = {
+                $set:{
+                    name:body.name
+                }
+            }
+            const result = await subjectCollection.updateOne(query,docs)
+            res.send(result)
+            console.log(result);
+          
+            
+            
+        })
+
+        app.get("/subject/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await subjectCollection.findOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+        app.delete("/subject/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await subjectCollection.deleteOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+
+
+        
+        
+        // shift api=================
+
+        app.get("/shift",async(req,res)=> {
+            const data = await shiftCollection.find().toArray()
+            res.send(data)
+        })
+        app.post("/shift",async(req,res)=> {
+            const body = req.body
+            const result = await shiftCollection.insertOne(body)
+            res.send(result)
+            
+            
+        })
+        app.patch("/shift/:id",async(req,res)=> {
+            const body = req.body
+            const id = req.params.id
+            const query = {_id:ObjectId(id)}
+            const docs = {
+                $set:{
+                    name:body.name
+                }
+            }
+            const result = await shiftCollection.updateOne(query,docs)
+            res.send(result)
+            console.log(result);
+          
+            
+            
+        })
+
+        app.get("/shift/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await shiftCollection.findOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+        app.delete("/shift/:id",async(req,res)=> {
+            const id = req.params.id
+            const data = await shiftCollection.deleteOne({_id:ObjectId(id)})
+            res.send(data)
+        })
+
 
        
  
